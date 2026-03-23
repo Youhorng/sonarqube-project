@@ -22,6 +22,27 @@ const createUser = async (req, res, next) => {
   }
 };
 
+const getUsers = async (req, res, next) => {
+  try {
+    const users = await userService.getUsers();
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getUser = async (req, res, next) => {
+  try {
+    const user = await userService.getUserById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const updateUser = async (req, res, next) => {
   try {
     const { error } = updateUserSchema.validate(req.body);
@@ -38,27 +59,6 @@ const updateUser = async (req, res, next) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.json(user);
-  } catch (err) {
-    next(err);
-  }
-};
-
-const getUsers = async (req, res, next) => {
-  try {
-    const users = await userService.getUsers();
-    res.json(users);
-  } catch (err) {
-    next(err);
-  }
-};
-
-const getUser = async (req, res, next) => {
-  try {
-    const user = await userService.getUserById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
     res.json(user);
   } catch (err) {
     next(err);
