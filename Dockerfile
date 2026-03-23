@@ -22,7 +22,7 @@ COPY --from=builder /app/node_modules ./node_modules
 
 # Copy application source
 COPY package.json ./
-COPY server.js app.js ./
+COPY server.js ./
 COPY src ./src
 
 # Set ownership
